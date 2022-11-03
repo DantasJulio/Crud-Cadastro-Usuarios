@@ -25,17 +25,13 @@ import br.com.springboot.curso_jdev_treinamento.repository.UsuarioRepository;
  *
  * A sample greetings controller to return greeting text
  */
-@RestController // essa notação, assim como a do @SpringBootApplication, fica acima da classe.
+@RestController
 public class GreetingsController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-    /**
-     *
-     * @param name the name to greet
-     * @return greeting text
-     */
+	// abaixo os métodos de requisição
     @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String greetingText(@PathVariable String name) {
@@ -54,17 +50,17 @@ public class GreetingsController {
     }
     
     @GetMapping(value="listatodos") /**ESSE É O MEU PRIMERO MÉTODO DE API**/
-    @ResponseBody // retorna os dados para o CORPO DA RESPOSTA. RETORNA UM JSON.
-    public ResponseEntity<List<Usuario>> listaUsuarios(){ // o ResponseEntity é o que o nome diz, uma entidade de busca e resposta.
+    @ResponseBody 
+    public ResponseEntity<List<Usuario>> listaUsuarios(){ 
     	
-    	List<Usuario> usuarios = usuarioRepository.findAll(); // criei uma lista de Usuarios que recebe o método findAll da interface JpaRepository, que executa a busca no banco de dados.
-    	return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK); //retornei um ResponseEntity do tipo Lista de Usuarios passando como body a lista crianda acima e o status Http.
+    	List<Usuario> usuarios = usuarioRepository.findAll(); 
+    	return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK); 
     	
-    };/// como construir uma API. Precisa ser publica e SEMPRE retornar um JSON.
+    };
     
-    @PostMapping(value="salvar") // mapeia a URL
-    @ResponseBody // Descrição da resposta.
-    public ResponseEntity<?> salvar(@RequestBody Usuario usuario){ // @RequestBody recebe os dados para salvar.
+    @PostMapping(value="salvar")
+    @ResponseBody
+    public ResponseEntity<?> salvar(@RequestBody Usuario usuario){ // 
 //    	if(usuario.getId() == null) {
 //    		return new ResponseEntity<String>("O ID não foi informado.", HttpStatus.NOT_ACCEPTABLE);	
 //    	}
@@ -74,37 +70,37 @@ public class GreetingsController {
     			
     }
     
-    @DeleteMapping(value="deletar") // deleta a URL
+    @DeleteMapping(value="deletar")
     @ResponseBody
     public ResponseEntity<String> deletar(@RequestParam Long userid){
     	if(userid == null) {
-    		return new ResponseEntity<String>("O ID não foi informado.", HttpStatus.NOT_ACCEPTABLE);	
+    		return new ResponseEntity<String>("O ID não foi informado.", HttpStatus.NOT_ACCEPTABLE); // retorna erro caso o ID do usuário não seja informado.	
     	}
     	usuarioRepository.deleteById(userid);
     	return new ResponseEntity<String>("User deleted sucessfully.", HttpStatus.OK);
     }
     
-    @GetMapping(value="buscaruserid") /**ESSE É O MEU PRIMERO MÉTODO DE API**/
-    @ResponseBody // retorna os dados para o CORPO DA RESPOSTA. RETORNA UM JSON.
-    public ResponseEntity<?> buscarUserId(@RequestParam(name = "userid") Long userid){ // o ResponseEntity é o que o nome diz, uma entidade de busca e resposta.
+    @GetMapping(value="buscaruserid") 
+    @ResponseBody 
+    public ResponseEntity<?> buscarUserId(@RequestParam(name = "userid") Long userid){ 
     	if(userid == null) {
     		return new ResponseEntity<String>("O ID não foi informado.", HttpStatus.NOT_ACCEPTABLE);	
     	}
-    	Usuario usuario = usuarioRepository.findById(userid).get(); // criei uma lista de Usuarios que recebe o método findAll da interface JpaRepository, que executa a busca no banco de dados.
+    	Usuario usuario = usuarioRepository.findById(userid).get(); 
     	return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
    
     }
     
-    @GetMapping(value="buscarpornome") /**ESSE É O MEU PRIMERO MÉTODO DE API**/
-    @ResponseBody // retorna os dados para o CORPO DA RESPOSTA. RETORNA UM JSON.
-    public ResponseEntity<List<Usuario>> buscarPorNome(@RequestParam(name = "name") String name){ // o ResponseEntity é o que o nome diz, uma entidade de busca e resposta.
+    @GetMapping(value="buscarpornome") 
+    @ResponseBody 
+    public ResponseEntity<List<Usuario>> buscarPorNome(@RequestParam(name = "name") String name){ 
     	
-    	List<Usuario> usuario = usuarioRepository.buscarPorNome(name.trim().toUpperCase()); // criei uma lista de Usuarios que recebe o método findAll da interface JpaRepository, que executa a busca no banco de dados.
+    	List<Usuario> usuario = usuarioRepository.buscarPorNome(name.trim().toUpperCase()); 
     	return new ResponseEntity<List<Usuario>>(usuario, HttpStatus.OK);
     }
     
-    @PutMapping(value="atualizar") // mapeia a URL
-    @ResponseBody // Descrição da resposta.
+    @PutMapping(value="atualizar") 
+    @ResponseBody 
     public ResponseEntity<?> atualizar(@RequestBody Usuario usuario){ // @RequestBody recebe os dados para salvar.
     	if(usuario.getId() == null) {
     		return new ResponseEntity<String>("O ID não foi informado.", HttpStatus.NOT_ACCEPTABLE);	
