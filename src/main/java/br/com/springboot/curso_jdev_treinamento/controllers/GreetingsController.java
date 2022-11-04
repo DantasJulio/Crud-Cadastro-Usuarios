@@ -30,25 +30,7 @@ public class GreetingsController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	// abaixo os métodos de requisição
-    @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Curso Spring Boot API: " + name + "!";
-    }
-    
-    @RequestMapping(value = "/olamundo/{nome}")
-    @ResponseStatus(HttpStatus.OK)
-    public String retornaOlaMundo(@PathVariable String nome) {
-    	
-    	Usuario usuario = new Usuario();
-    	usuario.setNome(nome);
-    	usuarioRepository.save(usuario);
-    	
-    	return "Olá, mundo!" + nome;
-    }
-    
+	    
     @GetMapping(value="listatodos") /**ESSE É O MEU PRIMERO MÉTODO DE API**/
     @ResponseBody 
     public ResponseEntity<List<Usuario>> listaUsuarios(){ 
