@@ -28,8 +28,25 @@ import br.com.springboot.curso_jdev_treinamento.repository.UsuarioRepository;
 @RestController
 public class GreetingsController {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+	
+    @RequestMapping(value = "/projeto/{name}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public String greetingText(@PathVariable String name) {
+        return  name;
+    }
+    
+    @RequestMapping(value = "/projeto/{nome}")
+    @ResponseStatus(HttpStatus.OK)
+    public String retornaOlaMundo(@PathVariable String nome) {
+    	
+    	Usuario usuario = new Usuario();
+    	usuario.setNome(nome);
+    	usuarioRepository.save(usuario);
+    	
+    	return nome;
+    }
 	    
     @GetMapping(value="listatodos") /**ESSE É O MEU PRIMERO MÉTODO DE API**/
     @ResponseBody 
